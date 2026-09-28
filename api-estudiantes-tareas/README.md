@@ -4,7 +4,7 @@ API REST desarrollada en Node.js y Express para la gestión y consulta de tareas
 
 ---
 
-## 📋 Estructura de Datos (Modelo de Tarea)
+Estructura de Datos (Modelo de Tarea)
 
 Cada tarea cuenta con los siguientes campos:
 * `id` (integer): Identificador único de la tarea.
@@ -15,7 +15,7 @@ Cada tarea cuenta con los siguientes campos:
 
 ---
 
-## 🚀 Contrato de API
+Contrato de API
 
 | Acción | Método HTTP | Endpoint | Código Éxito |
 | :--- | :---: | :--- | :---: |
@@ -26,7 +26,7 @@ Cada tarea cuenta con los siguientes campos:
 
 ---
 
-## 💻 Instalación y Ejecución Local
+Instalación y Ejecución Local
 
 1. **Clonar repositorio:**
    ```bash
@@ -52,7 +52,7 @@ El servidor quedará disponible en `http://localhost:3000`.
 
 ---
 
-## 📌 Respuestas y Respuestas de Error
+Respuestas y Respuestas de Error
 
 ### 1. Consultar una tarea (`GET /api/tareas/1`):
 ```json
@@ -92,7 +92,7 @@ El servidor quedará disponible en `http://localhost:3000`.
 
 ---
 
-## ⚠️ Análisis de Breaking Change
+Análisis de Breaking Change
 
 Un cambio que rompería retroactivamente este contrato para clientes existentes sería:
 * **Renombrar campos:** Cambiar `"fechaEntrega"` por `"deadline"` o `"entrega_at"`.
