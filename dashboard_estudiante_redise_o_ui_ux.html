@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Estudiante - Rediseño UX/UI</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Phosphor Icons for crisp, accessible icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    /* Smooth transitions for preview toggle */
+    .viewport-transition {
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
+</head>
+
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased">
+
+  <!-- Top UX Control Bar -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50 px-4 py-2.5 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-2">
+        <span class="inline-flex items-center justify-center p-1.5 bg-blue-600 text-white rounded-lg font-bold text-xs">
+          UX
+        </span>
+        <div>
+          <h1 class="text-xs sm:text-sm font-semibold text-slate-900 leading-tight">
+            Propuesta de Rediseño Dashboard
+          </h1>
+          <p class="text-[11px] text-slate-500 hidden sm:block">
+            Resuelve: "Quiero entrar y saber rápidamente qué debo atender"
+          </p>
+        </div>
+      </div>
+
+      <!-- Viewport Toggle Buttons -->
+      <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 space-x-1 text-xs">
+        <button id="btn-desktop" onclick="setDeviceView('desktop')" 
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all bg-white text-blue-600 shadow-sm">
+          <i class="ph ph-desktop text-base"></i>
+          <span>Escritorio</span>
+        </button>
+        <button id="btn-mobile" onclick="setDeviceView('mobile')" 
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900">
+          <i class="ph ph-device-mobile text-base"></i>
+          <span>Móvil (390px)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 flex justify-center p-2 sm:p-6 lg:p-8">
+    <!-- Dynamic Container: switches between full-width responsive and smartphone frame -->
+    <div id="device-wrapper" class="w-full max-w-6xl viewport-transition bg-white shadow-xl rounded-2xl border border-slate-200 overflow-hidden flex flex-col min-h-[840px]">
+
+      <!-- Mobile Speaker/Camera Notch (Only visible in mobile frame simulation) -->
+      <div id="mobile-notch" class="hidden justify-center items-center pt-2 pb-1 bg-slate-900 text-white">
+        <div class="w-20 h-3.5 bg-black rounded-full flex items-center justify-center">
+          <div class="w-2 h-2 rounded-full bg-slate-800 ml-6"></div>
+        </div>
+      </div>
+
+      <!-- Main Application Navbar -->
+      <nav class="bg-white border-b border-slate-200 px-4 sm:px-6 py-3">
+        <div class="flex items-center justify-between gap-4">
+          <!-- Logo & Brand -->
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-blue-700 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+              <i class="ph ph-graduation-cap text-xl"></i>
+            </div>
+            <div>
+              <span class="font-bold text-base tracking-tight text-slate-900 block leading-tight">Portal Estudiante</span>
+              <span class="text-[11px] text-slate-500 font-medium">Universidad Rafael Landívar</span>
+            </div>
+          </div>
+
+          <!-- Navigation Links with Icons AND Text (Solves Mystery Meat Navigation) -->
+          <div class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium">
+            <a href="#inicio" class="flex items-center space-x-2 px-3 py-2 rounded-lg bg-blue-50 text-blue-700 font-semibold transition">
+              <i class="ph ph-house text-lg"></i>
+              <span>Inicio</span>
+            </a>
+            <a href="#cursos" class="flex items-center space-x-2 px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition">
+              <i class="ph ph-book-open text-lg"></i>
+              <span>Mis Cursos</span>
+            </a>
+            <a href="#calendario" class="flex items-center space-x-2 px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition">
+              <i class="ph ph-calendar text-lg"></i>
+              <span>Calendario</span>
+            </a>
+            <a href="#tareas" class="flex items-center space-x-2 px-3 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition">
+              <i class="ph ph-check-square-offset text-lg"></i>
+              <span>Tareas</span>
+            </a>
+          </div>
+
+          <!-- User actions: Notifications & Profile -->
+          <div class="flex items-center space-x-2 sm:space-x-3">
+            <!-- Notifications bell with active indicator -->
+            <button class="relative p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Notificaciones">
+              <i class="ph ph-bell text-xl"></i>
+              <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+            </button>
+            
+            <!-- User Pill -->
+            <div class="flex items-center space-x-2 pl-2 border-l border-slate-200">
+              <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs border border-slate-300">
+                ER
+              </div>
+              <span class="text-xs font-medium text-slate-700 hidden lg:inline">Eduardo R.</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="flex-1 bg-slate-50 p-4 sm:p-6 lg:p-8 space-y-6 overflow-y-auto">
+
+        <!-- UX Improvement Notification Banner -->
+        <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-3 sm:p-4 flex items-start gap-3 text-xs sm:text-sm text-indigo-900">
+          <i class="ph ph-sparkle text-lg text-indigo-600 shrink-0 mt-0.5"></i>
+          <div>
+            <span class="font-semibold text-indigo-950">Mejoras de UX aplicadas:</span>
+            Se removió información superflua (12k visitas y archivos de almacén). Se priorizan tareas de atención urgente arriba con etiquetas de texto claras para cumplir la pauta WCAG de no depender sólo del color rojo.
+          </div>
+        </div>
+
+        <!-- 1. HIGH PRIORITY: IMMEDIATE ATTENTION SECTION (Highest Visual Weight) -->
+        <section aria-labelledby="section-attention">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+              <h2 id="section-attention" class="text-sm font-bold tracking-wide uppercase text-slate-700">
+                Atención Inmediata
+              </h2>
+            </div>
+            <span class="text-xs text-slate-500">2 elementos urgentes</span>
+          </div>
+
+          <div class="space-y-3">
+            <!-- Overdue Task Card (Accessible: Color + Icon + Explicit Label) -->
+            <div class="bg-white border-2 border-red-500 rounded-xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+              <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-600"></div>
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="space-y-1.5">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <!-- Explicit text label + Warning Icon (WCAG compliant) -->
+                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700 border border-red-200">
+                      <i class="ph ph-warning-circle text-sm font-bold"></i>
+                      [VENCIDA]
+                    </span>
+                    <span class="text-xs font-semibold px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md">
+                      Programación Web
+                    </span>
+                  </div>
+                  <h3 class="text-base sm:text-lg font-bold text-slate-900">
+                    Proyecto Final - Desarrollo Frontend & Arquitectura API
+                  </h3>
+                  <p class="text-xs sm:text-sm text-red-600 font-medium flex items-center gap-1">
+                    <i class="ph ph-clock text-base"></i>
+                    Venció: Ayer a las 23:59 hrs (Plazo de gracia activo)
+                  </p>
+                </div>
+                <div class="flex sm:flex-col items-center sm:items-end gap-2 shrink-0">
+                  <button class="w-full sm:w-auto px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-semibold text-xs sm:text-sm rounded-lg shadow-sm transition flex items-center justify-center gap-2 focus:ring-2 focus:ring-red-400">
+                    <span>Ver entrega</span>
+                    <i class="ph ph-arrow-right font-bold"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Due Soon Task Card -->
+            <div class="bg-white border border-amber-300 rounded-xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+              <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500"></div>
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="space-y-1.5">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                      <i class="ph ph-hourglass text-sm"></i>
+                      VENCE MAÑANA
+                    </span>
+                    <span class="text-xs font-semibold px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md">
+                      Base de Datos
+                    </span>
+                  </div>
+                  <h3 class="text-base sm:text-lg font-bold text-slate-900">
+                    Cuestionario 3 - Normalización y Modelado ER
+                  </h3>
+                  <p class="text-xs sm:text-sm text-slate-600 flex items-center gap-1">
+                    <i class="ph ph-clock text-base"></i>
+                    Límite: Mañana a las 18:00 hrs
+                  </p>
+                </div>
+                <div class="flex sm:flex-col items-center sm:items-end gap-2 shrink-0">
+                  <button class="w-full sm:w-auto px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm rounded-lg shadow-sm transition flex items-center justify-center gap-2 focus:ring-2 focus:ring-slate-400">
+                    <span>Completar</span>
+                    <i class="ph ph-check-circle"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. ACTIONABLE SUMMARY METRICS (Curated: removed noisy visits and total files) -->
+        <section aria-labelledby="section-metrics">
+          <h2 id="section-metrics" class="text-xs font-bold tracking-wide uppercase text-slate-500 mb-3">
+            Resumen Operativo
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            <!-- Pending Tasks Metric -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3.5">
+              <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 text-2xl">
+                <i class="ph ph-check-square-offset"></i>
+              </div>
+              <div>
+                <span class="text-2xl font-extrabold text-slate-900 block leading-tight">5</span>
+                <span class="text-xs font-medium text-slate-500">Tareas Pendientes</span>
+              </div>
+            </div>
+
+            <!-- Evaluations this week -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3.5">
+              <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 text-2xl">
+                <i class="ph ph-calendar-check"></i>
+              </div>
+              <div>
+                <span class="text-2xl font-extrabold text-slate-900 block leading-tight">2</span>
+                <span class="text-xs font-medium text-slate-500">Evaluaciones esta semana</span>
+              </div>
+            </div>
+
+            <!-- Active Courses -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3.5">
+              <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 text-2xl">
+                <i class="ph ph-book-open"></i>
+              </div>
+              <div>
+                <span class="text-2xl font-extrabold text-slate-900 block leading-tight">8</span>
+                <span class="text-xs font-medium text-slate-500">Cursos Matriculados</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. TWO-COLUMN LAYOUT: UPCOMING EXAMS & QUICK ACCESS TO COURSES -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          <!-- Upcoming Evaluations (1 Column) -->
+          <section class="lg:col-span-1 space-y-3" aria-labelledby="section-evals">
+            <div class="flex items-center justify-between">
+              <h2 id="section-evals" class="text-xs font-bold tracking-wide uppercase text-slate-500">
+                Próximas Evaluaciones
+              </h2>
+              <span class="text-xs font-semibold text-blue-600 hover:underline cursor-pointer">Ver calendario</span>
+            </div>
+
+            <div class="space-y-2.5">
+              <!-- Exam 1 -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2 py-0.5 rounded">
+                      Parcial No. 2
+                    </span>
+                    <h4 class="font-bold text-slate-900 text-sm mt-1.5">Programación Web</h4>
+                    <p class="text-xs text-slate-500 mt-0.5 flex items-center gap-1">
+                      <i class="ph ph-clock"></i> Miércoles, 09:00 AM
+                    </p>
+                  </div>
+                  <div class="text-center bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-200">
+                    <span class="text-[10px] uppercase font-bold text-slate-400 block">Días</span>
+                    <span class="text-sm font-bold text-slate-800">2</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Exam 2 -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
+                      Quiz Corto
+                    </span>
+                    <h4 class="font-bold text-slate-900 text-sm mt-1.5">Física II</h4>
+                    <p class="text-xs text-slate-500 mt-0.5 flex items-center gap-1">
+                      <i class="ph ph-clock"></i> Viernes, 11:30 AM
+                    </p>
+                  </div>
+                  <div class="text-center bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-200">
+                    <span class="text-[10px] uppercase font-bold text-slate-400 block">Días</span>
+                    <span class="text-sm font-bold text-slate-800">4</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Active Courses Grid (2 Columns) -->
+          <section class="lg:col-span-2 space-y-3" aria-labelledby="section-courses">
+            <div class="flex items-center justify-between">
+              <h2 id="section-courses" class="text-xs font-bold tracking-wide uppercase text-slate-500">
+                Mis Cursos (8)
+              </h2>
+              <span class="text-xs font-semibold text-blue-600 hover:underline cursor-pointer">Ver todos</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Course Card 1 -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow transition group cursor-pointer">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">
+                    PW
+                  </span>
+                  <span class="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                    Al día
+                  </span>
+                </div>
+                <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">Programación Web</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Sección 04 • Lic. Morales</p>
+                <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
+                  <span>1 tarea vencida</span>
+                  <i class="ph ph-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+              </div>
+
+              <!-- Course Card 2 -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow transition group cursor-pointer">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
+                    BD
+                  </span>
+                  <span class="text-[11px] font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+                    1 pendiente
+                  </span>
+                </div>
+                <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">Base de Datos</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Sección 01 • Ing. Castillo</p>
+                <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
+                  <span>Cuestionario mañana</span>
+                  <i class="ph ph-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+              </div>
+
+              <!-- Course Card 3 -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow transition group cursor-pointer">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">
+                    ED
+                  </span>
+                  <span class="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                    Al día
+                  </span>
+                </div>
+                <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">Estructuras de Datos</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Sección 02 • Ing. Alvarez</p>
+                <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
+                  <span>2 tareas por entregar</span>
+                  <i class="ph ph-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+              </div>
+
+              <!-- Course Card 4 -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow transition group cursor-pointer">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs">
+                    CI
+                  </span>
+                  <span class="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                    Al día
+                  </span>
+                </div>
+                <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">Cálculo Integral</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Sección 03 • Licda. Gómez</p>
+                <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
+                  <span>Sin pendientes hoy</span>
+                  <i class="ph ph-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+
+      <!-- Bottom Navigation Bar (Visible in Mobile View / Screens) -->
+      <nav id="mobile-bottom-bar" class="md:hidden bg-white border-t border-slate-200 px-3 py-2 flex items-center justify-around shadow-lg">
+        <a href="#inicio" class="flex flex-col items-center justify-center text-blue-700 font-semibold text-[10px] py-1 px-2">
+          <i class="ph ph-house text-xl"></i>
+          <span>Inicio</span>
+        </a>
+        <a href="#cursos" class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 text-[10px] py-1 px-2">
+          <i class="ph ph-book-open text-xl"></i>
+          <span>Cursos</span>
+        </a>
+        <a href="#calendario" class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 text-[10px] py-1 px-2">
+          <i class="ph ph-calendar text-xl"></i>
+          <span>Agenda</span>
+        </a>
+        <a href="#tareas" class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 text-[10px] py-1 px-2 relative">
+          <i class="ph ph-check-square-offset text-xl"></i>
+          <span class="absolute top-1 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+          <span>Tareas</span>
+        </a>
+        <a href="#perfil" class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 text-[10px] py-1 px-2">
+          <i class="ph ph-user text-xl"></i>
+          <span>Perfil</span>
+        </a>
+      </nav>
+
+    </div>
+  </main>
+
+  <script>
+    function setDeviceView(mode) {
+      const wrapper = document.getElementById('device-wrapper');
+      const btnDesktop = document.getElementById('btn-desktop');
+      const btnMobile = document.getElementById('btn-mobile');
+      const notch = document.getElementById('mobile-notch');
+
+      if (mode === 'mobile') {
+        // Apply smartphone frame styles
+        wrapper.classList.remove('max-w-6xl');
+        wrapper.classList.add('max-w-[390px]', 'ring-8', 'ring-slate-900', 'rounded-[40px]');
+        notch.classList.remove('hidden');
+        notch.classList.add('flex');
+
+        // Toggle button states
+        btnMobile.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+        btnMobile.classList.remove('text-slate-600');
+        btnDesktop.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+        btnDesktop.classList.add('text-slate-600');
+      } else {
+        // Revert to full desktop layout
+        wrapper.classList.add('max-w-6xl');
+        wrapper.classList.remove('max-w-[390px]', 'ring-8', 'ring-slate-900', 'rounded-[40px]');
+        notch.classList.add('hidden');
+        notch.classList.remove('flex');
+
+        // Toggle button states
+        btnDesktop.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+        btnDesktop.classList.remove('text-slate-600');
+        btnMobile.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+        btnMobile.classList.add('text-slate-600');
+      }
+    }
+  </script>
+</body>
+</html>
